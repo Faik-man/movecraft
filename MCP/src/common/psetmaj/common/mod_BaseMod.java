@@ -34,7 +34,7 @@ public class mod_BaseMod
 		
 		GameRegistry.addRecipe(new ItemStack(SoulStoneIdle), new Object[] {
 			"SRS",
-			"RSR",
+			"RSR", 
 			"SRS",
 			'S',Block.slowSand,
 			'R',Item.redstone
