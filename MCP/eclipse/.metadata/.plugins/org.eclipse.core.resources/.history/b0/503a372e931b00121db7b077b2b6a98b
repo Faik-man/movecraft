@@ -1,0 +1,44 @@
+package psetmaj.common;
+
+import net.minecraft.src.Block;
+import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.Entity;
+import net.minecraft.src.Material;
+import net.minecraft.src.World;
+
+public class ScratchBlock extends Block {
+
+	public final boolean isPowered;
+
+	public ScratchBlock(int id, int textureId, boolean isPowered) {
+		super(id, textureId, Material.rock);
+		this.isPowered = isPowered;
+		if (!isPowered)
+			this.setCreativeTab(CreativeTabs.tabBlock);
+	}
+
+	@Override
+	public int getBlockColor() {
+		if (isPowered)
+			return 0xff5555;
+		return super.getBlockColor();
+	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborId) {
+		if (!isPowered && world.isBlockGettingPowered(x, y, z)) {
+			world.setBlockWithNotify(x, y, z, mod_BaseMod.ScratchBlockPowered.blockID);
+		} else if (isPowered && !world.isBlockGettingPowered(x, y, z)) {
+			world.setBlockWithNotify(x, y, z, mod_BaseMod.ScratchBlockIdle.blockID);
+		}
+	}
+
+	@Override
+	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+		float multiplier = isPowered?2f:.1f;
+		entity.motionX*= multiplier;
+		entity.motionY*= multiplier;
+		entity.motionZ*=multiplier;
+	}
+
+}

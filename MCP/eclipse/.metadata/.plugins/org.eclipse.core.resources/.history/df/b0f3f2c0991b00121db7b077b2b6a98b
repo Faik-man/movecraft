@@ -1,0 +1,62 @@
+package psetmaj.common;
+
+import net.minecraft.src.AxisAlignedBB;
+import net.minecraft.src.Block;
+import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.Entity;
+import net.minecraft.src.Material;
+import net.minecraft.src.World;
+
+public class ScratchBlock extends Block {
+
+	public final boolean isPowered;
+	
+	public static final double MAX_SPEED = 5D;
+
+	public ScratchBlock(int id, int textureId, boolean isPowered) {
+		super(id, textureId, Material.sand);
+		this.isPowered = isPowered;
+		if (!isPowered)
+			this.setCreativeTab(CreativeTabs.tabBlock);
+	}
+
+	@Override
+	public int getBlockColor() {
+		if (isPowered)
+			return 0xff5555;
+		return super.getBlockColor();
+	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int x, int y, int z, int neighborId) {
+		if (!isPowered && world.isBlockGettingPowered(x, y, z)) {
+			world.setBlockWithNotify(x, y, z, mod_BaseMod.ScratchBlockPowered.blockID);
+		} else if (isPowered && !world.isBlockGettingPowered(x, y, z)) {
+			world.setBlockWithNotify(x, y, z, mod_BaseMod.ScratchBlockIdle.blockID);
+		}
+	}
+	
+    /**
+     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
+     * cleared to be reused)
+     */
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        float var5 = 0.125F;
+        return AxisAlignedBB.getAABBPool().addOrModifyAABBInPool((double)par2, (double)par3, (double)par4, (double)(par2 + 1), (double)((float)(par3 + 1) - var5), (double)(par4 + 1));
+    }
+
+	@Override
+	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+		double multiplier = isPowered ? 2D : 0D;
+		entity.motionX = clamp(-MAX_SPEED,entity.motionX*multiplier,MAX_SPEED);
+		entity.motionY = clamp(-MAX_SPEED,entity.motionY*multiplier,MAX_SPEED);
+		entity.motionZ = clamp(-MAX_SPEED,entity.motionZ*multiplier,MAX_SPEED);
+	}
+	
+	static double clamp(double min, double input, double max)
+	{
+		return Math.max(min, Math.min(input, max));
+	}
+
+}

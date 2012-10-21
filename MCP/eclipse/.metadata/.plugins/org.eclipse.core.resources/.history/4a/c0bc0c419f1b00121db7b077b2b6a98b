@@ -1,0 +1,39 @@
+package psetmaj.common;
+
+import net.minecraft.src.Block;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+
+@Mod(modid = "psetmaj", name = "moveCraft", version="0.0.1")
+@NetworkMod(clientSideRequired=true,serverSideRequired=false)
+public class mod_BaseMod 
+{
+	public static Block SoulStoneIdle;
+	public static Block ScratchBlockPowered;
+	
+	@Init
+	public void load(FMLInitializationEvent event)
+	{
+		SoulStoneIdle = (new SoulStoneBlock(255,104,false)).setBlockName("ScratchBlock").setHardness(1F).setResistance(5F);
+		ScratchBlockPowered = (new SoulStoneBlock(254,103,true)).setBlockName("ScratchBlock").setHardness(1F).setResistance(5F);
+		
+		GameRegistry.registerBlock(SoulStoneIdle);
+		GameRegistry.registerBlock(ScratchBlockPowered);
+
+		LanguageRegistry.addName(SoulStoneIdle, "Soul Stone");
+		
+		GameRegistry.addRecipe(new ItemStack(SoulStoneIdle), new Object[] {
+			"SRS",
+			"RSR",
+			"SRS",
+			'S',Block.slowSand,
+			'R',Item.redstone
+		});
+	}
+}

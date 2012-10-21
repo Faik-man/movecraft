@@ -1,0 +1,11 @@
+package psetmaj.common;
+
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.network.NetworkMod;
+
+@Mod(modid = "psetmaj", name = "alchemicraft", version="0.0.1")
+@NetworkMod(clientSideRequired=true,serverSideRequired=false)
+public class mod_BaseMod 
+{
+	public static final Block ScratchBlock;
+}

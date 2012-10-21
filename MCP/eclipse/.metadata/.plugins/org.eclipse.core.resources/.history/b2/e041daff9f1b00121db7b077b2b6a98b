@@ -1,0 +1,7 @@
+package psetmaj.common;
+
+import net.minecraft.src.Block;
+
+public class ScratchBlock extends Block {
+
+}

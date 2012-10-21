@@ -1,0 +1,10 @@
+package psetmaj.common;
+
+import net.minecraft.src.Block;
+
+public class ScratchBlock extends Block {
+
+	public ScratchBlock(int id, int textureID) {
+		super(id,textureID);
+	}
+}

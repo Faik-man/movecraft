@@ -1,0 +1,8 @@
+package psetmaj.common;
+
+import cpw.mods.fml.common.Mod;
+
+@Mod(modid = "psetmaj", name = "alchemicraft")
+public class mod_BaseMod {
+
+}
