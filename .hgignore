@@ -1,1 +1,4 @@
 
+syntax: regexp
+.*resources/\.history.*
+.*core/.*\.index
